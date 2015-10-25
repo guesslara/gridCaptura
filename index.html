@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="grid.js"></script>
+	<!-- <link rel="stylesheet" type="text/css" href="grid.css" /> -->
+	<link rel="stylesheet" type="text/css" href="gridCaptura.css">
+	<script type="text/javascript">
+		$(document).ready(function (){
+			//se define el array para el nombre de las columnas
+			nombresColumnas=new Array("Columna 1","Columna 2","Columna 3","Mensaje")
+			cargaInicial(4,"gridCapturaInformacion","controladorEnsamble.php","","errores",nombresColumnas);
+			inicio();
+			$("#txt_0").focus();
+	        $("#txt_0").removeClass("datoListado");
+	        $("#txt_0").addClass("elementoFocus");
+	    });
+	</script>
+</head>
+
+<body>
+	<div id="gridCapturaInformacion"></div>
+	<div id="errores"></div>
+
+	<!-- <div class="containerGridCaptura">
+		<table>
+			<thead>
+				<tr>
+					<td class="cuadroGrid">&nbsp;</td>
+					<td class="cabeceraColumna">Columna 1</td>
+					<td class="cabeceraColumna">Columna 2</td>
+					<td class="cabeceraColumna">Columna 3</td>
+					<td class="cabeceraColumna">Columna 4</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="cuadroGrid">1</td>
+					<td><input id="txt_0" class="elementoFocus" type="text" onkeypress="tecla(this.id,this.value,event)"></td>
+					<td><input id="txt_0" class="elementoFocus" type="text" onkeypress="tecla(this.id,this.value,event)"></td>
+					<td><input id="txt_0" class="elementoFocus" type="text" onkeypress="tecla(this.id,this.value,event)"></td>
+					<td><input id="txt_0" class="elementoFocus" type="text" onkeypress="tecla(this.id,this.value,event)"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div> -->
+
+</body>
+</html>
