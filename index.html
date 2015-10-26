@@ -11,8 +11,8 @@
 	<script type="text/javascript">
 		$(document).ready(function (){
 			//se define el array para el nombre de las columnas
-			nombresColumnas=new Array("Columna 1","Columna 2","Columna 3","Mensaje")
-			cargaInicial(4,"gridCapturaInformacion","controladorEnsamble.php","","errores",nombresColumnas);
+			nombresColumnas=new Array("Columna 1","Columna 2","Columna 3")
+			cargaInicial(4,"gridCapturaInformacion","controladorEnsamble.php","","errores",nombresColumnas,false);
 			inicio();
 			$("#txt_0").focus();
 	        $("#txt_0").removeClass("datoListado");

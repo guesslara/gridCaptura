@@ -25,6 +25,7 @@ urlPeticion="";//url de la peticion
 parametrosPeticion="";//valores para la peticion ajax
 //div para los posibles errores en las peticiones
 divError="";
+mostrarCajaResultadoG=true;
 
 function resetDatosScriptGrid(){
    contadorNombre=0;
@@ -34,9 +35,10 @@ function resetDatosScriptGrid(){
    urlPeticion="";
    parametrosPeticion="";
    divError="";
+   mostrarCajaResultado=true;
 }
 
-function cargaInicial(noColumnasDefinidas,divContenedor,urlPeticionUsuario,parametrosPeticionUsuario,divErrores,nombresColumnas){
+function cargaInicial(noColumnasDefinidas,divContenedor,urlPeticionUsuario,parametrosPeticionUsuario,divErrores,nombresColumnas,mostrarCajaResultado){
     resetDatosScriptGrid();
     noColumnas=noColumnasDefinidas;//se definen las columnas
     gridContenedor=divContenedor;//se establece el nombre del div
@@ -44,13 +46,19 @@ function cargaInicial(noColumnasDefinidas,divContenedor,urlPeticionUsuario,param
     parametrosPeticion=parametrosPeticionUsuario;//parametros extra para la funcion ajax
     divError=divErrores;//div para los errores y mensajes
     nombresCols=nombresColumnas;
+    mostrarCajaResultadoG=mostrarCajaResultado;
 }
 function inicio(){
     if(contadorNombre==0 && contadorFocus==0){	    
         var arrayColumnas="<div class='containerGridCaptura'><table id='tblGridCapturaHTML'><thead><tr><td class='cuadroGrid'>&nbsp;</td>";
         for(var i=0;i<nombresCols.length;i++){		
     	   if(i==nombresCols.length-1){
-    	       arrayColumnas+="<td class='resultadoGuardadoCol'>"+nombresCols[i]+"</td>";    
+                if(mostrarCajaResultadoG){
+                    arrayColumnas+="<td class='resultadoGuardadoCol'>"+nombresCols[i]+"</td>";    
+                }else{
+                    arrayColumnas+="<td class='cabeceraColumna'>"+nombresCols[i]+"</td>";    
+                }
+    	       //arrayColumnas+="<td class='resultadoGuardadoCol'>"+nombresCols[i]+"</td>";    
     	   }else{
     	       arrayColumnas+="<td class='cabeceraColumna'>"+nombresCols[i]+"</td>";    
     	   }
@@ -66,7 +74,12 @@ function renglonGridHTML(opcionRenglon){
     var renglonHTML="<tr>";//variable para el renglonHTML
     for(filas=filas;filas<noColumnas;filas++){
         if(filas == (noColumnas-1)){//se compara si el numero de filas es igual a las columnas -1
-            renglonHTML+="<td><input type='text' id='Resultado"+contadorNombre+"' readonly='readonly' class='resultadoGuardado' /></td>";//se concatena a la cadena con su id contenedor de la respuesta
+            if(mostrarCajaResultadoG){
+                renglonHTML+="<td><input type='text' id='Resultado"+contadorNombre+"' readonly='readonly' class='resultadoGuardado' /></td>";//se concatena a la cadena con su id contenedor de la respuesta                
+            }else{
+                renglonHTML+="<td><input type='text' id='txt_"+contadorNombre+"' onkeypress='tecla(this.id,this.value,event)' class='datoListado' /></td>";//se concatenan las cajas necesarias con sus id's                
+            }
+            //renglonHTML+="<td><input type='text' id='Resultado"+contadorNombre+"' readonly='readonly' class='resultadoGuardado' /></td>";//se concatena a la cadena con su id contenedor de la respuesta
         }else{
             if(filas==0){
                 renglonHTML+="<td class='cuadroGrid'>"+contadorRenglones+"</td>"
