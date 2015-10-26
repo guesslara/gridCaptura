@@ -1,1 +1,97 @@
-.containerGridCaptura table{width:100%;border-spacing:0;border-collapse:separate}.containerGridCaptura td,.containerGridCaptura th{padding:0;border-spacing:0;border:.8px solid #CCC}.containerGridCaptura td input{padding:0;margin:0;border:0;border:none;width:97%;height:3em}.containerGridCaptura .cabeceraColumna{background:#CCC;height:18px;font-size:12px;font-weight:bold;text-align:center}.containerGridCaptura .cuadroGrid{background:#CCC;font-weight:bold;text-align:center;font-size:11px;padding:.6em}.containerGridCaptura .resultadoGuardadoCol{background:#CCC;height:18px;font-size:12px;font-weight:bold;text-align:center}.containerGridCaptura .resultadoGuardado{background:#FFC;border:1px solid #CCC;font-weight:bold;position:relative;display:block;width:90%}.containerGridCaptura .elementoFocus{background:#e1e1e1;width:97%}@media screen and (max-width: 720px){.containerGridCaptura table,.containerGridCaptura thead,.containerGridCaptura tr,.containerGridCaptura th,.containerGridCaptura tbody,.containerGridCaptura td{display:block}.containerGridCaptura thead tr{position:absolute;top:-9999px;left:-9999px}.containerGridCaptura td{border:none;border-bottom:1px solid #eee;position:relative;padding-left:50%}.containerGridCaptura td:before{position:absolute;top:4px;left:0px;width:44%;white-space:nowrap;background:#CCC;height:18px;font-size:12px;font-weight:bold;text-align:center;border:.8em solid #CCC}.containerGridCaptura td:nth-of-type(1):before{content:""}.containerGridCaptura td:nth-of-type(2):before{content:"Imei"}.containerGridCaptura td:nth-of-type(3):before{content:"Serial"}.containerGridCaptura td:nth-of-type(4):before{content:"Sim"}.containerGridCaptura td:nth-of-type(5):before{content:"MFGDATE"}.containerGridCaptura td:nth-of-type(6):before{content:"Mensaje"}}
+.containerGridCaptura table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: separate;
+}
+
+.containerGridCaptura td, .containerGridCaptura th {
+  padding: 0;
+  border-spacing: 0;
+  border: .8px solid #CCC;
+}
+
+.containerGridCaptura td input {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border: none;
+  width: 97%;
+  height: 3em;
+}
+
+.containerGridCaptura .cabeceraColumna {
+  background: #CCC;
+  height: 18px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.containerGridCaptura .cuadroGrid {
+  background: #CCC;
+  font-weight: bold;
+  text-align: center;
+  font-size: 11px;
+  padding: .6em;
+}
+
+.containerGridCaptura .resultadoGuardadoCol {
+  background: #CCC;
+  height: 18px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.containerGridCaptura .resultadoGuardado {
+  background: #FFC;
+  border: 1px solid #CCC;
+  font-weight: bold;
+  position: relative;
+  display: block;
+  width: 90%;
+}
+
+.containerGridCaptura .elementoFocus {
+  background: #e1e1e1;
+  width: 97%;
+}
+
+@media screen and (max-width: 720px) {
+  .containerGridCaptura {
+    /*td:nth-of-type(1):before{content: "";}
+		td:nth-of-type(2):before{content: "Imei";}
+		td:nth-of-type(3):before{content: "Serial";}
+		td:nth-of-type(4):before{content: "Sim";}
+		td:nth-of-type(5):before{content: "MFGDATE";}
+		td:nth-of-type(6):before{content: "Mensaje";}*/
+  }
+  .containerGridCaptura table, .containerGridCaptura thead, .containerGridCaptura tr, .containerGridCaptura th, .containerGridCaptura tbody, .containerGridCaptura td {
+    display: block;
+  }
+  .containerGridCaptura thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  .containerGridCaptura td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+  .containerGridCaptura td:before {
+    position: absolute;
+    top: 4px;
+    left: 0px;
+    width: 44%;
+    /*padding-right: 10px;*/
+    white-space: nowrap;
+    background: #CCC;
+    height: 18px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    border: .8em solid #CCC;
+  }
+}

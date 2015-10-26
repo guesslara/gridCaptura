@@ -4,6 +4,16 @@ Las funciones se acompañan del uso de la libreria jquery
 Las peticiones ajax hacia el servidor se realizan tambien con jquery
 Autor: Gerardo Lara
 Fecha: 29-enero-2012
+***********************************************************************************************************************************
+Se ha modificado la forma en la cual se muestran los renglones hacia como el layout
+ahora el layout se forma en tabla y se maneja como opcional que aparezca la columna del resultado y la peticion hacia un script
+Autor: Gerardo Lara
+Fecha 24-octubre-2015
+***********************************************************************************************************************************
+Se corrigio la forma en la cual pasa entre caja y caja para poder hacerlo de forma natural ya que no contempla ningun envio de datos
+al servidor.
+Autor: Gerardo Lara
+Fecha 26-octubre-2015
 */
 
 /*++++++++++++++++++++++++++++++++*/
@@ -27,6 +37,9 @@ parametrosPeticion="";//valores para la peticion ajax
 divError="";
 mostrarCajaResultadoG=true;
 
+var cadenaResponsive="";//variable para almacenar las columnas en estilo responsivo
+var cntR=1;//contador para las columnas en modo responsivo
+
 function resetDatosScriptGrid(){
    contadorNombre=0;
    contadorFocus=0;
@@ -49,8 +62,11 @@ function cargaInicial(noColumnasDefinidas,divContenedor,urlPeticionUsuario,param
     mostrarCajaResultadoG=mostrarCajaResultado;
 }
 function inicio(){
-    if(contadorNombre==0 && contadorFocus==0){	    
-        var arrayColumnas="<div class='containerGridCaptura'><table id='tblGridCapturaHTML'><thead><tr><td class='cuadroGrid'>&nbsp;</td>";
+    var arrayColumnas=""; cadenaResponsive=""; cntR=1;
+    if(contadorNombre==0 && contadorFocus==0){	
+        cadenaResponsive="<style type='text/css'>@media screen and (max-width: 720px) {";
+        cadenaResponsive+="td:nth-of-type("+cntR+"):before{content: '.';}";
+        arrayColumnas+="<div class='containerGridCaptura'><table id='tblGridCapturaHTML'><thead><tr><td class='cuadroGrid'>&nbsp;</td>";
         for(var i=0;i<nombresCols.length;i++){		
     	   if(i==nombresCols.length-1){
                 if(mostrarCajaResultadoG){
@@ -58,15 +74,16 @@ function inicio(){
                 }else{
                     arrayColumnas+="<td class='cabeceraColumna'>"+nombresCols[i]+"</td>";    
                 }
-    	       //arrayColumnas+="<td class='resultadoGuardadoCol'>"+nombresCols[i]+"</td>";    
     	   }else{
     	       arrayColumnas+="<td class='cabeceraColumna'>"+nombresCols[i]+"</td>";    
     	   }
+           cadenaResponsive+="td:nth-of-type("+(cntR+=1)+"):before{content: '"+nombresCols[i]+"';}"
         }
         arrayColumnas+="</tr></thead><tbody>";
+        cadenaResponsive+="}</style>";
     }
     var cierreGridHTML="</tbody></table></div>";
-    $("#"+gridContenedor).append(arrayColumnas+renglonGridHTML(0)+cierreGridHTML);
+    $("#"+gridContenedor).append(cadenaResponsive+arrayColumnas+renglonGridHTML(0)+cierreGridHTML);
     contadorRenglones+=1;//se aumenta en 1 el contador de renglones
     filas=0;//se regresa el contador de columnas a 0
 }
@@ -79,7 +96,6 @@ function renglonGridHTML(opcionRenglon){
             }else{
                 renglonHTML+="<td><input type='text' id='txt_"+contadorNombre+"' onkeypress='tecla(this.id,this.value,event)' class='datoListado' /></td>";//se concatenan las cajas necesarias con sus id's                
             }
-            //renglonHTML+="<td><input type='text' id='Resultado"+contadorNombre+"' readonly='readonly' class='resultadoGuardado' /></td>";//se concatena a la cadena con su id contenedor de la respuesta
         }else{
             if(filas==0){
                 renglonHTML+="<td class='cuadroGrid'>"+contadorRenglones+"</td>"
@@ -107,18 +123,28 @@ function tecla(id,valor,evento){
             cajasAnt=cajasAnt+","+$("#"+id).val();
         }
         var cajaAnterior="txt_"+(parseFloat(valor[1]));
+        /*
         if(contadorFocus==(noColumnas-1)){
-            cajaResultado="Resultado"+(contadorNombre-1);//caja para obtener el resultado
-            //inicio();//se agrega una nueva fila
-            renglonGridHTML(1);
+            if(mostrarCajaResultadoG){
+                cajaResultado="Resultado"+(contadorNombre-1);//caja para obtener el resultado
+                $("#"+cajaAnterior).removeClass("elementoFocus");
+                $("#"+cajaAnterior).addClass("datoListado");
+                $("#txt_"+(contadorNombre-noColumnas)).removeClass("datoListado");
+                $("#txt_"+(contadorNombre-noColumnas)).addClass("elementoFocus");
+                $("#txt_"+(contadorNombre-noColumnas)).focus();//se manda el focus a la siguiente caja
+                enviaDatosServidor(cajasAnt,cajaResultado);//se envian los datos a la funcion que lo procesará    
+                cajasAnt="";//la variable para concatenar los ids de las cajas se reinicia
+            }else{
+                var nvaCaja="txt_"+(parseFloat(valor[1])+1);//se calcula la siguiente caja de texto
+                console.log(nvaCaja)                
+                $("#"+cajaAnterior).removeClass("elementoFocus");
+                $("#"+cajaAnterior).addClass("datoListado");
+                $("#"+nvaCaja).focus();//se manda el focus a la nueva caja de texto
+                $("#"+nvaCaja).removeClass("datoListado");
+                $("#"+nvaCaja).addClass("elementoFocus");
+            }
+            renglonGridHTML(1);//se agrega una nueva fila
             contadorFocus=0;//se regresa el contador del focus
-            $("#"+cajaAnterior).removeClass("elementoFocus");
-            $("#"+cajaAnterior).addClass("datoListado");
-            $("#txt_"+(contadorNombre-noColumnas)).removeClass("datoListado");
-            $("#txt_"+(contadorNombre-noColumnas)).addClass("elementoFocus");
-            $("#txt_"+(contadorNombre-noColumnas)).focus();//se manda el focus a la siguiente caja
-            enviaDatosServidor(cajasAnt,cajaResultado);//se envian los datos a la funcion que lo procesará
-            cajasAnt="";//la variable para concatenar los ids de las cajas se reinicia
         }else{
             var nvaCaja="txt_"+(parseFloat(valor[1])+1);//se calcula la siguiente caja de texto
             $("#"+cajaAnterior).removeClass("elementoFocus");
@@ -127,9 +153,30 @@ function tecla(id,valor,evento){
             $("#"+nvaCaja).removeClass("datoListado");
             $("#"+nvaCaja).addClass("elementoFocus");
         }
+        */
+        if(contadorFocus==noColumnas){
+            renglonGridHTML(1);//se agrega una nueva fila
+            contadorFocus=0;//se regresa el contador del focus
+            addCajaGridCaptura(cajaAnterior, valor);
+        }else{
+            addCajaGridCaptura(cajaAnterior,valor);
+        }
     }
 }
 
+function addCajaGridCaptura(cajaAnterior,valor){
+    var nvaCaja="txt_"+(parseFloat(valor[1])+1);//se calcula la siguiente caja de texto
+        $("#"+cajaAnterior).removeClass("elementoFocus");
+        $("#"+cajaAnterior).addClass("datoListado");
+        $("#"+nvaCaja).focus();//se manda el focus a la nueva caja de texto
+        $("#"+nvaCaja).removeClass("datoListado");
+        $("#"+nvaCaja).addClass("elementoFocus");    
+}
+/***********************************************************************************************************
+************************************************************************************************************
+***funciones qen estado deprecated, ya que se esta cambiando toda la funcionalidad del componente***********
+************************************************************************************************************
+***********************************************************************************************************/
 function enviaDatosServidor(cajas,cajaResultado){
     //se envia la peticion al servidor con los valores obtenidos y el resultado a la caja cajaResultado
     $("#"+cajaResultado).attr("value","Validando...");
@@ -140,7 +187,11 @@ function enviaDatosServidor(cajas,cajaResultado){
     //se mandan llamar las variables que contienen la peticion ajax
     ajaxAppGrid(divError,urlPeticion,parametrosPeticion);
 }
-
+/***********************************************************************************************************
+************************************************************************************************************
+***funciones qen estado deprecated, ya que se esta cambiando toda la funcionalidad del componente***********
+************************************************************************************************************
+***********************************************************************************************************/
 function ajaxAppGrid(divDestino,url,parametros){	
     $.ajax({
         async:true,
