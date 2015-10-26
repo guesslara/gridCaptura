@@ -166,11 +166,11 @@ function tecla(id,valor,evento){
 
 function addCajaGridCaptura(cajaAnterior,valor){
     var nvaCaja="txt_"+(parseFloat(valor[1])+1);//se calcula la siguiente caja de texto
-        $("#"+cajaAnterior).removeClass("elementoFocus");
-        $("#"+cajaAnterior).addClass("datoListado");
-        $("#"+nvaCaja).focus();//se manda el focus a la nueva caja de texto
-        $("#"+nvaCaja).removeClass("datoListado");
-        $("#"+nvaCaja).addClass("elementoFocus");    
+    $("#"+cajaAnterior).removeClass("elementoFocus");
+    $("#"+cajaAnterior).addClass("datoListado");
+    $("#"+nvaCaja).focus();//se manda el focus a la nueva caja de texto
+    $("#"+nvaCaja).removeClass("datoListado");
+    $("#"+nvaCaja).addClass("elementoFocus");    
 }
 /***********************************************************************************************************
 ************************************************************************************************************
